@@ -9,7 +9,7 @@
     <meta property="og:description" content="Viernes 20 de noviembre de 2026 · 6:30 p.m. · Hotel W&amp;P Santo Domingo">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@400;500;600&family=Great+Vibes&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@400;500;600&family=Great+Vibes&family=Cormorant+Garamond:ital,wght@1,500;1,600&display=swap" rel="stylesheet">
     <link rel="preload" as="image" href="intro-poster.jpg?v=2">
     <link rel="stylesheet" href="CCSB.css">
         <style>
@@ -161,6 +161,22 @@
             <button type="button" class="intro-skip" id="introSkip">Saltar ›</button>
             <div class="intro-flash" aria-hidden="true"></div>
             <div class="intro-bf-glow" aria-hidden="true"><div class="intro-bf-shape"></div></div>
+        </div>
+
+        <!-- Mensaje de las quinceañeras (aparece palabra por palabra después del video) -->
+        <div id="introMessage" class="intro-message" aria-live="polite">
+            <img class="msg-flower msg-flower-tl" src="flor-esquina.png" alt="" aria-hidden="true">
+            <img class="msg-flower msg-flower-br" src="flor-esquina.png" alt="" aria-hidden="true">
+            <img class="msg-bf msg-bf-1" src="mariposa.webp" alt="" aria-hidden="true">
+            <img class="msg-bf msg-bf-2" src="mariposa.webp" alt="" aria-hidden="true">
+            <div class="msg-inner">
+                <img class="msg-crown" src="icono-corona.png" alt="Tiara">
+                <h2 class="msg-title" data-reveal="title">Nuestros 15 Años</h2>
+                <p class="msg-text" data-reveal="text">Con la bendición de Dios y el amor de toda nuestra familia, nos sentimos muy felices de llegar a este momento de nuestras vidas.</p>
+                <p class="msg-text" data-reveal="text">Ahora empieza un camino que conduce a un mundo de sueños e ilusiones, que con mucha fe, humildad y esperanza deseamos cumplir.</p>
+                <p class="msg-sign" data-reveal="sign">Lía Daniela &amp; Laia Daniela</p>
+            </div>
+            <button type="button" class="intro-skip msg-skip" id="msgSkip">Continuar ›</button>
         </div>
 
         <!-- Reproductor de música -->
@@ -430,6 +446,6 @@
             } catch(e) {}
         })();
         </script>
-        <script src="JAVAB.js?v=33" defer></script>
+        <script src="JAVAB.js?v=34" defer></script>
 </body>
 </html>

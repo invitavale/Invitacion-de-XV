@@ -664,6 +664,58 @@ function showToast(title, message) {
         updateMusicIcon();
     }
 
+    function endEverything() {
+        document.documentElement.classList.remove('intro-lock');
+        document.documentElement.classList.add('intro-done');
+    }
+
+    // ---- Mensaje palabra por palabra ----
+    let msgStarted = false, msgEnded = false, msgTimer = null;
+    function buildWords(el, startDelay, step) {
+        const words = el.textContent.trim().split(/\s+/);
+        el.textContent = '';
+        let d = startDelay;
+        words.forEach((w, i) => {
+            const span = document.createElement('span');
+            span.className = 'w';
+            span.textContent = w;
+            span.style.animationDelay = d.toFixed(2) + 's';
+            el.appendChild(span);
+            if (i < words.length - 1) el.appendChild(document.createTextNode(' '));
+            d += step;
+        });
+        return d;
+    }
+    function endMessage() {
+        if (msgEnded) return;
+        msgEnded = true;
+        clearTimeout(msgTimer);
+        const msg = document.getElementById('introMessage');
+        if (!msg) { endEverything(); return; }
+        msg.classList.add('is-leaving');
+        setTimeout(endEverything, 700);
+        setTimeout(() => msg.remove(), 2000);
+    }
+    function startMessage() {
+        if (msgStarted) return;
+        msgStarted = true;
+        const msg = document.getElementById('introMessage');
+        if (!msg) { endEverything(); return; }
+        const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        let t = 0.6;
+        msg.querySelectorAll('[data-reveal]').forEach((el) => {
+            const kind = el.getAttribute('data-reveal');
+            if (kind === 'title') { t = buildWords(el, t, 0.32) + 0.5; }
+            else if (kind === 'text') { t = buildWords(el, t, reduce ? 0.02 : 0.17) + 0.7; }
+            else { el.style.animationDelay = t.toFixed(2) + 's'; el.classList.add('w-block'); t += 1.2; }
+        });
+        msg.classList.add('is-on');
+        // Se queda visible un momento para leerlo y luego entra a la invitación.
+        msgTimer = setTimeout(endMessage, (t + 2.6) * 1000);
+        const skip = document.getElementById('msgSkip');
+        if (skip) skip.addEventListener('click', endMessage);
+    }
+
     function finishIntro() {
         releaseMusic();
         if (finished) return;
@@ -671,10 +723,8 @@ function showToast(title, message) {
         const gate = document.getElementById('introGate');
         document.documentElement.classList.add('intro-leaving');
         if (gate) gate.classList.add('is-leaving');
-        setTimeout(() => {
-            document.documentElement.classList.remove('intro-lock');
-            document.documentElement.classList.add('intro-done');
-        }, 1500);
+        // El mensaje aparece detrás del destello dorado
+        setTimeout(startMessage, 1100);
         setTimeout(() => {
             if (gate) gate.remove();
             document.documentElement.classList.remove('intro-leaving');

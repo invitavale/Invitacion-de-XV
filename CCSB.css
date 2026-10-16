@@ -2350,3 +2350,90 @@ html.intro-leaving .hero-section { }
     .rsvp-container.gold-card { width: calc(100% - 3rem) !important; padding-top: 3rem !important; padding-bottom: 3rem !important; }
     .rsvp-container .section-title { font-size: 1.75rem !important; }
 }
+
+/* =========================================================
+   Mensaje de las quinceañeras (palabra por palabra)
+   ========================================================= */
+.intro-message {
+    position: fixed;
+    inset: 0;
+    z-index: 9990;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background:
+        radial-gradient(ellipse 70% 50% at 50% 45%, rgba(255,255,255,0.95), rgba(255,255,255,0) 72%),
+        radial-gradient(ellipse 90% 40% at 50% 100%, rgba(236,208,139,0.28), transparent 70%),
+        linear-gradient(175deg, #FFFBF5 0%, #FBF1E6 50%, #F6E6E2 100%);
+}
+.intro-message.is-on { display: flex; animation: msg-in 1.4s ease both; }
+.intro-message.is-leaving { animation: msg-out 1.6s ease forwards; pointer-events: none; }
+@keyframes msg-in { from { opacity: 0; } to { opacity: 1; } }
+@keyframes msg-out { from { opacity: 1; filter: blur(0); } to { opacity: 0; filter: blur(6px); transform: scale(1.03); } }
+
+.msg-inner {
+    position: relative;
+    z-index: 2;
+    max-width: 560px;
+    padding: 2rem 1.75rem;
+    text-align: center;
+}
+.msg-crown { width: 104px; height: auto; margin: 0 auto 0.6rem; display: block; opacity: 0; animation: word-in 1.2s ease 0.1s forwards; }
+.msg-title, .msg-text, .msg-sign {
+    font-family: 'Cormorant Garamond', 'Playfair Display', serif;
+    font-style: italic;
+}
+.msg-title {
+    font-weight: 600;
+    font-size: clamp(2rem, 8.5vw, 2.8rem);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    margin-bottom: 1.4rem;
+}
+.msg-text {
+    font-weight: 500;
+    font-size: clamp(1.18rem, 4.9vw, 1.5rem);
+    line-height: 1.6;
+    margin-bottom: 1.3rem;
+}
+.msg-sign {
+    font-family: 'Great Vibes', cursive;
+    font-style: normal;
+    font-size: clamp(1.8rem, 7vw, 2.4rem);
+    margin-top: 0.6rem;
+}
+/* Cada palabra: dorado, aparece con desenfoque suave */
+.msg-inner .w, .msg-inner .w-block {
+    display: inline-block;
+    opacity: 0;
+    background: linear-gradient(180deg, #CFAE5E 0%, #B48A3E 55%, #946B26 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    filter: blur(6px);
+    transform: translateY(6px);
+    animation: word-in 0.9s cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
+}
+.msg-sign.w-block { display: block; padding: 0 0.2em; }
+@keyframes word-in { to { opacity: 1; filter: blur(0); transform: none; } }
+
+.msg-flower { position: absolute; width: min(42vw, 260px); z-index: 1; pointer-events: none; opacity: 0; animation: word-in 2s ease 0.3s forwards; }
+.msg-flower-tl { top: -8px; left: -22px; transform: rotate(-6deg); }
+.msg-flower-br { bottom: -8px; right: -22px; transform: rotate(174deg); }
+.msg-flower.msg-flower-tl { animation-name: msg-flower-tl; }
+.msg-flower.msg-flower-br { animation-name: msg-flower-br; }
+@keyframes msg-flower-tl { to { opacity: 0.95; transform: rotate(-6deg); } }
+@keyframes msg-flower-br { to { opacity: 0.95; transform: rotate(174deg); } }
+.msg-bf { position: absolute; z-index: 2; pointer-events: none; filter: drop-shadow(0 6px 8px rgba(120,80,20,0.25)); animation: bf-float 8s ease-in-out infinite; }
+.msg-bf-1 { width: 58px; bottom: 16%; left: 9%; }
+.msg-bf-2 { width: 46px; top: 15%; right: 10%; animation-delay: -4s; }
+.msg-skip { opacity: 1 !important; pointer-events: auto !important; color: #9C7630 !important; background: rgba(255,255,255,0.6) !important; border-color: rgba(201,164,92,0.7) !important; transition: none !important; }
+@media (prefers-reduced-motion: reduce) {
+    .msg-inner .w, .msg-inner .w-block, .msg-crown, .msg-flower { animation-duration: 0.01s !important; }
+}
+.msg-text { font-size: clamp(1.32rem, 5.7vw, 1.7rem) !important; line-height: 1.55 !important; }
+.msg-title { font-size: clamp(2.2rem, 9.5vw, 3rem) !important; }
+.msg-skip { right: auto !important; left: 50% !important; transform: translateX(-50%); bottom: calc(22px + env(safe-area-inset-bottom)) !important; z-index: 5; }
+.msg-title { font-size: clamp(1.75rem, 7.4vw, 2.8rem) !important; letter-spacing: 0.02em !important; white-space: nowrap; }
+.msg-crown { width: 120px !important; filter: drop-shadow(0 4px 10px rgba(169,95,115,0.25)); }
